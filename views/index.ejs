@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Plainview Grave Registry</title>
+	</head>
+	<body>
+		<h1>Planinview Grave Registry</h1>
+		<p>
+			Enter as many values as are known and leave unknown fields blank.
+			Leave all fields blank for a list of all available records.
+		</p>
+		<p>
+			Fields are not case-sensitive and partial matches are accepted. For
+			example,, entering "Mill" in the Last Naem field could return
+			records with a last name of "Miller" "Hamill" and "Mill".
+		</p>
+		<form action="/search" method="get" id="search-form">
+			<div>
+				<label for="lastName">Last Name</label>
+				<input type="text" id="lastName" name="lastName" />
+			</div>
+			<div>
+				<label for="firstName">First Name</label>
+				<input type="text" id="firstName" name="firstName" />
+			</div>
+			<div>
+				<label for="birthYear">Birth Year</label>
+				<input
+					type="number"
+					id="birthYear"
+					name="birthYear"
+					min="1700"
+					max="2050"
+				/>
+			</div>
+			<div>
+				<label for="deathYear">Death Year</label>
+				<input
+					type="number"
+					id="deathYear"
+					name="deathYear"
+					min="1700"
+					max="2050"
+				/>
+			</div>
+			<button type="submit"></button>
+		</form>
+		<h1>Search Results</h1>
+	</body>
+</html>
