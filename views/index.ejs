@@ -4,6 +4,37 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Plainview Grave Registry</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+			}
+			form {
+				margin: 20px;
+				font-size: larger;
+			}
+			button {
+				font-size: larger;
+			}
+			input {
+				font-size: larger;
+			}
+			div {
+				margin: 20px;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+			}
+			th,
+			td {
+				border: 1px solid #ddd;
+				padding: 8px;
+				text-align: left;
+			}
+			th {
+				background-color: #f2f2f2;
+			}
+		</style>
 	</head>
 	<body>
 		<h1>Planinview Grave Registry</h1>
@@ -13,7 +44,7 @@
 		</p>
 		<p>
 			Fields are not case-sensitive and partial matches are accepted. For
-			example,, entering "Mill" in the Last Naem field could return
+			example,, entering "Mill" in the Last Name field could return
 			records with a last name of "Miller" "Hamill" and "Mill".
 		</p>
 		<form action="/search" method="get" id="search-form">
@@ -48,5 +79,27 @@
 			<button type="submit">Search</button>
 		</form>
 		<h1>Search Results</h1>
+		<% if(records) { %>
+		<table>
+			<tr>
+				<th>Last Name</th>
+				<th>Maiden Name</th>
+				<th>First Name</th>
+				<th>Middle Name</th>
+				<th>Title</th>
+				<th>Birth Year</th>
+				<th>Death Year</th>
+				<th>Age</th>
+				<th>Notes</th>
+			</tr>
+			<% records.forEach(function(record) { %>
+			<tr>
+				<% for(let field in record) { %>
+				<td><%= record[field] %></td>
+				<% } %>
+			</tr>
+			<% }); %>
+		</table>
+		<% } else {"No records returned."} %>
 	</body>
 </html>

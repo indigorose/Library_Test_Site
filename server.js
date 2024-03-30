@@ -21,14 +21,15 @@ app.get('/search', async (req, res) => {
 	const { lastName, firstName, birthYear, deathYear } = req.query;
 	let query = supabase
 		.from('grave_data_random')
-		.select(`last_name, middle_name, first_name, title, birth_year_1`)
+		.select(`last_name, first_name, birth_year, death_year`)
 		.order('last_name', { ascending: true });
+
 	if (lastName) {
-		// do something
-		query = query.ilike('last_name', `%${lastName}`);
+		query = query.ilike('last_name', `%${lastName}%`);
+		console.log(query);
 	}
 	if (firstName) {
-		query = query.ilike('first_name', `%${firstName}`);
+		query = query.ilike('first_name', `%${firstName}%`);
 	}
 	if (birthYear) {
 		query = query.eq('birth_year', birthYear);
@@ -37,8 +38,6 @@ app.get('/search', async (req, res) => {
 		query = query.eq('death_year', deathYear);
 	}
 
-	// select * from grave_data_random where the last_name like ('%lastName%')
-	//order by last_name asc
 	try {
 		let { data, error } = await query;
 		if (error) {
@@ -51,6 +50,5 @@ app.get('/search', async (req, res) => {
 		res.status(500).send('Internal Server Error');
 	}
 });
-
 const port = process.env.PORT;
 app.listen(port, () => console.log(`Listening on Port: ${port}`));
