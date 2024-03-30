@@ -3,7 +3,7 @@ const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
 const app = express();
-const PORT = 5000;
+
 const supabase = createClient(
 	process.env.SUPABASE_URL,
 	process.env.SUPABASE_KEY
@@ -21,7 +21,7 @@ app.get('/search', async (req, res) => {
 	const { lastName, firstName, birthYear, deathYear } = req.query;
 	let query = supabase
 		.from('grave_data_random')
-		.select('*')
+		.select(`last_name, middle_name, first_name, title, birth_year_1`)
 		.order('last_name', { ascending: true });
 	if (lastName) {
 		// do something
@@ -31,10 +31,10 @@ app.get('/search', async (req, res) => {
 		query = query.ilike('first_name', `%${firstName}`);
 	}
 	if (birthYear) {
-		query = query.ilike('birth_year', `%${birthYear}`);
+		query = query.eq('birth_year', birthYear);
 	}
 	if (deathYear) {
-		query = query.ilike('death_Year', `%${deathYear}`);
+		query = query.eq('death_year', deathYear);
 	}
 
 	// select * from grave_data_random where the last_name like ('%lastName%')
@@ -52,6 +52,5 @@ app.get('/search', async (req, res) => {
 	}
 });
 
-app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`);
-});
+const port = process.env.PORT;
+app.listen(port, () => console.log(`Listening on Port: ${port}`));
